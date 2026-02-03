@@ -5,14 +5,15 @@
     </head>
 
     <body>
-        <h1>Hello 👋</h1>
-        <p>If you can see this, Nova is alive 💙</p>
-        
+        <h1 id="title">Hello 👋</h1>
+        <p id="status">If you can see this, Nova is alive 💙</p>
+
         <button onclick="sayHi()">Click me</button>
 
         <script>
             function sayHi() {
-                alert("Hi! Nova heard you 😄");
+                document.getElementById("status").innerText =
+                    "Nova is listening 😤✨";
             }
         </script>
     </body>
