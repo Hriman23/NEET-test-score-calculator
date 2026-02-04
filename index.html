@@ -143,10 +143,22 @@
             return type === "minor" ? 400 : 720;
         }
 
+        function getMaxQuestions() {
+            const type = document.getElementById("testType").value;
+            return type === "minor" ? 25 : 45;
+        }
 
         function calculatePhysics() {
             const phyC = Number(document.getElementById("phyC").value) || 0;
             const phyW = Number(document.getElementById("phyW").value) || 0;
+
+            const maxQ = getMaxQuestions();
+
+            if (phyC + phyW > maxQ) {
+                document.getElementById("phyResult").innerText =
+                    "❌ Physics questions cannot exceed " + maxQ;
+                return;
+            }
 
             const score = phyC * 4 - phyW;
 
@@ -158,15 +170,31 @@
             const chemC = Number(document.getElementById("chemC").value) || 0;
             const chemW = Number(document.getElementById("chemW").value) || 0;
 
+            const maxQ = getMaxQuestions();
+
+            if (chemC + chemW > maxQ) {
+                document.getElementById("chemResult").innerText =
+                    "❌ Chemistry questions cannot exceed " + maxQ;
+                return;
+            }
+
             const score = chemC * 4 - chemW;
 
             document.getElementById("chemResult").innerText =
                 "Chemistry score: " + score + " / 180";
         }
-
+        
         function calculateBotany() {
             const botC = Number(document.getElementById("botC").value) || 0;
             const botW = Number(document.getElementById("botW").value) || 0;
+
+            const maxQ = getMaxQuestions();
+
+            if (botC + botW > maxQ) {
+                document.getElementById("botResult").innerText =
+                    "❌ Botany questions cannot exceed " + maxQ;
+                return;
+            }
 
             const score = botC * 4 - botW;
 
@@ -177,6 +205,14 @@
         function calculateZoology() {
             const zooC = Number(document.getElementById("zooC").value) || 0;
             const zooW = Number(document.getElementById("zooW").value) || 0;
+
+            const maxQ = getMaxQuestions();
+
+            if (zooC + zooW > maxQ) {
+                document.getElementById("zooResult").innerText =
+                    "❌ Zoology questions cannot exceed " + maxQ;
+                return;
+            }
 
             const score = zooC * 4 - zooW;
 
@@ -224,7 +260,7 @@
             document.getElementById("totalResult").innerText =
                 "Total score: " + total + " / " + maxMarks;
             
-            const percentage = (total / 720) * 100;
+            const percentage = (total / maxMarks) * 100;
 
             document.getElementById("percentageResult").innerText =
                 "Percentage: " + percentage.toFixed(2) + "%";
