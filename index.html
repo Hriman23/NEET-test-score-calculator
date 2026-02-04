@@ -299,34 +299,65 @@
         function saveTest() {
             const testName = document.getElementById("testName").value || "Untitled Test";
             const testType = document.getElementById("testType").value;
-
             const now = new Date().toISOString();
 
-            const testData = {
-                id: Date.now(),           // unique enough for now
-                testName: testName,
-                testType: testType,
-                version: 1,
-                createdAt: now,
-                updatedAt: now,
-                rawData: {
-                    phyC: Number(document.getElementById("phyC").value),
-                    phyW: Number(document.getElementById("phyW").value),
-                    chemC: Number(document.getElementById("chemC").value),
-                    chemW: Number(document.getElementById("chemW").value),
-                    botC: Number(document.getElementById("botC").value),
-                    botW: Number(document.getElementById("botW").value),
-                    zooC: Number(document.getElementById("zooC").value),
-                    zooW: Number(document.getElementById("zooW").value)
-                }
+            const rawData = {
+                phyC: Number(document.getElementById("phyC").value),
+                phyW: Number(document.getElementById("phyW").value),
+                chemC: Number(document.getElementById("chemC").value),
+                chemW: Number(document.getElementById("chemW").value),
+                botC: Number(document.getElementById("botC").value),
+                botW: Number(document.getElementById("botW").value),
+                zooC: Number(document.getElementById("zooC").value),
+                zooW: Number(document.getElementById("zooW").value)
             };
 
-            const existing = JSON.parse(localStorage.getItem("neetLogs")) || [];
-            existing.push(testData);
-            localStorage.setItem("neetLogs", JSON.stringify(existing));
+            const logs = JSON.parse(localStorage.getItem("neetLogs")) || [];
 
-            alert("✅ Test saved successfully");
+            // 🆕 NEW TEST MODE
+            if (currentViewingTest === null) {
+                const newTest = {
+                    id: Date.now(),
+                    testName,
+                    testType,
+                    version: 1,
+                    createdAt: now,
+                    updatedAt: now,
+                    rawData
+                };
+
+                logs.push(newTest);
+                localStorage.setItem("neetLogs", JSON.stringify(logs));
+                alert("✅ Test saved successfully");
+
+                return;
+            }
+
+            // ✏️ EDIT MODE
+            const index = logs.findIndex(
+                (log) => log.id === currentViewingTest.id
+            );
+
+            if (index === -1) {
+                alert("❌ Error: test not found");
+                return;
+            }
+
+            logs[index] = {
+                ...logs[index],
+                testName,
+                testType,
+                version: logs[index].version + 1,
+                updatedAt: now,
+                rawData
+            };
+
+            localStorage.setItem("neetLogs", JSON.stringify(logs));
+            currentViewingTest = logs[index];
+
+            alert("🔄 Test updated successfully");
         }
+
 
         function loadHistory() {
             const list = document.getElementById("historyList");
@@ -385,8 +416,12 @@
                 "Saved: " + created +
                 " | Updated: " + updated +
                 " | v" + log.version;
+            
+            // 🔁 Mark that we are editing an existing test
+            document.querySelector(
+                "button[onclick='saveTest()']"
+            ).innerText = "Update Score";
         }
-
   
     </script>
   </body>
