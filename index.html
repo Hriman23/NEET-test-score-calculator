@@ -60,11 +60,40 @@
             <input id="chemW" type="number">
         </label>
 
+        <br><br>
+
+        <label>
+            Botany Correct:
+            <input id="botC" type="number">
+        </label>
+        <br>
+
+        <label>
+            Botany Wrong:
+            <input id="botW" type="number">
+        </label>
+        <br><br>
+
+        <label>
+            Zoology Correct:
+            <input id="zooC" type="number">
+        </label>
+        <br>
+
+        <label>
+            Zoology Wrong:
+            <input id="zooW" type="number">
+        </label>
+
 
         <p id="phyResult"></p>
         <p id="chemResult"></p>
+        <p id="botResult"></p>
+        <p id="zooResult"></p>
         <button onclick="calculatePhysics()">Calculate Physics</button>
         <button onclick="calculateChemistry()">Calculate Chemistry</button>
+        <button onclick="calculateBotany()">Calculate Botany</button>
+        <button onclick="calculateZoology()">Calculate Zoology</button>
         <button onclick="showScreen('home')">⬅ Back</button>
 
     </div>
@@ -122,6 +151,26 @@
 
             document.getElementById("chemResult").innerText =
                 "Chemistry score: " + score;
+        }
+
+        function calculateBotany() {
+            const botC = Number(document.getElementById("botC").value) || 0;
+            const botW = Number(document.getElementById("botW").value) || 0;
+
+            const score = botC * 4 - botW;
+
+            document.getElementById("botResult").innerText =
+                "Botany score: " + score;
+        }
+        
+        function calculateZoology() {
+            const zooC = Number(document.getElementById("zooC").value) || 0;
+            const zooW = Number(document.getElementById("zooW").value) || 0;
+
+            const score = zooC * 4 - zooW;
+
+            document.getElementById("zooResult").innerText =
+                "Zoology score: " + score;
         }
 
     </script>
