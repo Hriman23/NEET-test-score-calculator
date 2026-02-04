@@ -20,18 +20,19 @@
   <body>
     <!-- HOME SCREEN -->
     <div id="home" class="screen active">
+      <h1>NEET Calculator</h1>
       <h2>What do you want to do?</h2>
       <button onclick="showScreen('calculate')">Calculate Marks</button>
-      <button onclick="showScreen('history')">Check Previous Marks</button>
+      <button onclick="showScreen('history')">View Previous Tests' Marks</button>
     </div>
 
     <!-- CALCULATE SCREEN -->
     <div id="calculate" class="screen">
-        <h2>Calculate Marks</h2>
+        <h2>Welcome to the Test Score Calculator</h2>
         
         <label>
             Test Name:
-            <input id="testName" type="text" placeholder="Mastery 1.1">
+            <input id="testName" type="text" placeholder="Mastery 1.1 / AITS 5">
         </label>
         <br><br>
 
@@ -101,11 +102,14 @@
         <p id="zooResult"></p>
         <p id="totalResult"></p>
         <p id="percentageResult"></p>
-        <button onclick="calculatePhysics()">Calculate Physics</button>
-        <button onclick="calculateChemistry()">Calculate Chemistry</button>
-        <button onclick="calculateBotany()">Calculate Botany</button>
-        <button onclick="calculateZoology()">Calculate Zoology</button>
-        <button onclick="calculateTotal()">Calculate TOTAL</button>
+        <p id="equivalentResult"></p>
+        <p id="metaInfo"></p>
+        <button onclick="calculatePhysics()">Get Physics Marks</button>
+        <button onclick="calculateChemistry()">Get Chemistry Marks</button>
+        <button onclick="calculateBotany()">Get Botany Marks</button>
+        <button onclick="calculateZoology()">Get Zoology Marks</button>
+        <button onclick="calculateTotal()">Get Total Marks</button>
+        <button onclick="saveTest()">Save Score</button>
         <button onclick="showScreen('home')">⬅ Back</button>
 
     </div>
@@ -114,17 +118,25 @@
     <!-- HISTORY SCREEN -->
     <div id="history" class="screen">
       <h2>Previous Marks</h2>
-      <p>(Saved tests will appear here later)</p>
+      <div id="historyList"></div>
       <button onclick="showScreen('home')">⬅ Back</button>
     </div>
 
+    <!-- SCRIPTS -->
     <script>
+        let currentViewingTest = null;
+
         function showScreen(screenId) {
             document.querySelectorAll(".screen").forEach(function (screen) {
                 screen.classList.remove("active");
             });
             document.getElementById(screenId).classList.add("active");
+
+            if (screenId === "history") {
+                loadHistory();
+            }
         }
+
 
         function readInputs() {
             const name = document.getElementById("testName").value;
@@ -162,8 +174,11 @@
 
             const score = phyC * 4 - phyW;
 
+            const subjectMax = getMaxQuestions() * 4;
+
             document.getElementById("phyResult").innerText =
-                "Physics score: " + score + " / 180";
+                "Physics score: " + score + " / " + subjectMax;
+
         }
 
         function calculateChemistry() {
@@ -180,8 +195,10 @@
 
             const score = chemC * 4 - chemW;
 
+            const subjectMax = getMaxQuestions() * 4;
+
             document.getElementById("chemResult").innerText =
-                "Chemistry score: " + score + " / 180";
+                "Chemistry score: " + score + " / " + subjectMax;
         }
         
         function calculateBotany() {
@@ -198,8 +215,10 @@
 
             const score = botC * 4 - botW;
 
+            const subjectMax = getMaxQuestions() * 4;
+
             document.getElementById("botResult").innerText =
-                "Botany score: " + score + " / 180";
+                "Botany score: " + score + " / " + subjectMax;
         }
         
         function calculateZoology() {
@@ -216,8 +235,10 @@
 
             const score = zooC * 4 - zooW;
 
+            const subjectMax = getMaxQuestions() * 4;
+
             document.getElementById("zooResult").innerText =
-                "Zoology score: " + score + " / 180";
+                "Zoology score: " + score + " / " + subjectMax;
         }
 
         function calculateTotal() {
@@ -264,8 +285,109 @@
 
             document.getElementById("percentageResult").innerText =
                 "Percentage: " + percentage.toFixed(2) + "%";
+
+            if (maxMarks === 400) {
+                const equivalent720 = (total / 400) * 720;
+
+                document.getElementById("equivalentResult").innerText =
+                    "Equivalent NEET score: " + Math.round(equivalent720) + " / 720";
+            } else {
+                document.getElementById("equivalentResult").innerText = "";
+            }
         }
-        
+
+        function saveTest() {
+            const testName = document.getElementById("testName").value || "Untitled Test";
+            const testType = document.getElementById("testType").value;
+
+            const now = new Date().toISOString();
+
+            const testData = {
+                id: Date.now(),           // unique enough for now
+                testName: testName,
+                testType: testType,
+                version: 1,
+                createdAt: now,
+                updatedAt: now,
+                rawData: {
+                    phyC: Number(document.getElementById("phyC").value),
+                    phyW: Number(document.getElementById("phyW").value),
+                    chemC: Number(document.getElementById("chemC").value),
+                    chemW: Number(document.getElementById("chemW").value),
+                    botC: Number(document.getElementById("botC").value),
+                    botW: Number(document.getElementById("botW").value),
+                    zooC: Number(document.getElementById("zooC").value),
+                    zooW: Number(document.getElementById("zooW").value)
+                }
+            };
+
+            const existing = JSON.parse(localStorage.getItem("neetLogs")) || [];
+            existing.push(testData);
+            localStorage.setItem("neetLogs", JSON.stringify(existing));
+
+            alert("✅ Test saved successfully");
+        }
+
+        function loadHistory() {
+            const list = document.getElementById("historyList");
+            list.innerHTML = "";
+
+            const logs = JSON.parse(localStorage.getItem("neetLogs")) || [];
+
+            if (logs.length === 0) {
+                list.innerText = "No saved tests yet.";
+                return;
+            }
+
+            logs.forEach((log) => {
+                const btn = document.createElement("button");
+
+                const date = new Date(log.createdAt).toLocaleDateString();
+
+                btn.innerText = log.testName + " (" + date + ")";
+                btn.onclick = function () {
+                    openSavedTest(log);
+                };
+                list.appendChild(btn);
+            });
+        }
+
+        function openSavedTest(log) {
+            currentViewingTest = log;
+
+            document.getElementById("testName").value = log.testName;
+            document.getElementById("testType").value = log.testType;
+
+            document.getElementById("phyC").value = log.rawData.phyC;
+            document.getElementById("phyW").value = log.rawData.phyW;
+
+            document.getElementById("chemC").value = log.rawData.chemC;
+            document.getElementById("chemW").value = log.rawData.chemW;
+
+            document.getElementById("botC").value = log.rawData.botC;
+            document.getElementById("botW").value = log.rawData.botW;
+
+            document.getElementById("zooC").value = log.rawData.zooC;
+            document.getElementById("zooW").value = log.rawData.zooW;
+
+            showScreen("calculate");
+
+            calculatePhysics();
+            calculateChemistry();
+            calculateBotany();
+            calculateZoology();
+            calculateTotal();
+
+            const created = new Date(log.createdAt).toLocaleString();
+            const updated = new Date(log.updatedAt).toLocaleString();
+
+            document.getElementById("metaInfo").innerText =
+                "Saved: " + created +
+                " | Updated: " + updated +
+                " | v" + log.version;
+        }
+
+  
     </script>
   </body>
 </html>
