@@ -1,25 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Nova NEET Calculator</title>
+    <title>Hriman's NEET Calculator</title>
     <link rel="stylesheet" href="style.css">
-
-    <!--  DELETE <style> LATER. AFTER STYLE.CSS  -->
-    <style>
-      .screen {
-        display: none;
-      }
-      .screen.active {
-        display: block;
-      }
-      button {
-        padding: 15px;
-        margin: 10px;
-        font-size: 16px;
-      }
-    </style>
-    <!--  DELETE <style> LATER. AFTER STYLE.CSS  -->
-        
   </head>
 
   <body>
@@ -31,12 +14,15 @@
       <button onclick="showScreen('history')">View Previous Tests' Marks</button>
       <button onclick="exportTests()">📤 Export Tests</button>
       <button onclick="importTests()">📥 Import Tests</button>
-      <p>PS: Please don't clear your browser data. The tests are saved locally in your browser.</p>
+      <p>PS: Please don't clear your browser data.</p>
+      <p>The tests are saved locally in your browser.</p>
     </div>
 
     <!-- CALCULATE SCREEN -->
     <div id="calculate" class="screen">
-        <h2>Welcome to the Test Score Calculator</h2>
+      <div class="card">
+
+        <h2>Test Score Calculator</h2>
         
         <label>
             Test Name:
@@ -50,7 +36,6 @@
                 placeholder="Why are you editing this test?">
         </label>
 
-
         <label>
             Test Type:
             <select id="testType">
@@ -58,9 +43,7 @@
                 <option value="minor">Minor (400)</option>
             </select>
         </label>
-
         <br><br>
-
 
         <label>
             Physics Correct:
@@ -110,7 +93,6 @@
             <input id="zooW" type="number" min="0" max="45" required>
         </label>
 
-
         <p id="phyResult"></p>
         <p id="chemResult"></p>
         <p id="botResult"></p>
@@ -132,13 +114,12 @@
         <button onclick="deleteCurrentTest()" id="deleteBtn">🗑️ Delete</button>
         
         <button onclick="showScreen('home')">⬅ Back</button>
-
+      </div>
     </div>
-
 
     <!-- HISTORY SCREEN -->
     <div id="history" class="screen">
-      <h2>Previous Marks</h2>
+      <h2>Previous Test Logs</h2>
       <div id="historyList"></div>
       <button onclick="showScreen('home')">⬅ Back</button>
     </div>
@@ -163,7 +144,6 @@
                 loadHistory();
             }
         }
-
 
         function readInputs() {
             const name = document.getElementById("testName").value;
@@ -634,10 +614,6 @@
 
             input.click();
         }
-
-
-
-
   
     </script>
   </body>
