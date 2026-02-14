@@ -271,3 +271,13 @@ button {
   font-size: 1.2rem;
 }
 
+/* ===== Results Grid Layout ===== */
+#calculate .results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+#calculate results-meta {
+  margin-top: 16px;
+}

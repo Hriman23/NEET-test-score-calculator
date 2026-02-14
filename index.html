@@ -86,15 +86,28 @@
         </div>
 
         <div class="results-section">
-            <p id="phyResult"></p>
-            <p id="chemResult"></p>
-            <p id="botResult"></p>
-            <p id="zooResult"></p>
-            <p id="totalResult"></p>
-            <p id="percentageResult"></p>
-            <p id="equivalentResult"></p>
-            <p id="metaInfo"></p>
-            <p id="remarkDisplay" style="display:none;"></p>
+
+            <div class="results-grid">
+
+                <div class="results-left">
+                    <p id="phyResult"></p>
+                    <p id="chemResult"></p>
+                    <p id="botResult"></p>
+                    <p id="zooResult"></p>
+                </div>
+
+                <div class="results-right">
+                    <p id="totalResult"></p>
+                    <p id="percentageResult"></p>
+                    <p id="equivalentResult"></p>
+                </div>
+            </div>
+            
+            <div class="results-meta">
+                <p id="metaInfo"></p>
+                <p id="remarkDisplay" style="display:none;"></p>
+            </div>
+        
         </div>
 
         <button onclick="calculateTotal()">Get Total Marks</button>
