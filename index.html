@@ -27,7 +27,7 @@
     </div>
 
     <!-- CALCULATE SCREEN -->
-    <div id="calculate" class="screen active">
+    <div id="calculate" class="screen">
       <div class="card">
 
         <h2>Test Score Calculator</h2>
@@ -37,6 +37,7 @@
             <label>
                 Test Name:
                 <input id="testName" type="text" placeholder="Mastery 1.1 / AITS 5">
+                <span class="view-value" id="testName_view"></span>
             </label>
 
             <label id="editRemarkWrapper" style="display:none;">
@@ -51,6 +52,7 @@
                     <option value="major">Major (720)</option>
                     <option value="minor">Minor (400)</option>
                 </select>
+                <span class="view-value" id="testType_view"></span>
             </label>
         </div>
 
@@ -160,17 +162,19 @@
     </div>
 
     <!-- HISTORY SCREEN -->
-    <div id="history" class="screen">
-      <h2>Previous Test Logs</h2>
-      <div id="historyList"></div>
-      <button onclick="showScreen('home')">⬅ Back</button>
+    <div id="history" class="screen active">
+        <div class="card">
+            <h2>Previous Test Logs</h2>
+            <div id="historyList"></div>
+            <button onclick="showScreen('home')">⬅ Back</button>
+        </div>
     </div>
 
     <!-- SCRIPTS -->
     <script>
         let currentViewingTest = null;
         let lastScreen = "home";
-        const DEV_MODE = true; // Set to true to enable auto-filled test for faster development
+        const DEV_MODE = false; // Set to true to enable auto-filled test for faster development
         let liveCalculationEnabled = false;
 
         function showScreen(screenId) {
@@ -619,6 +623,14 @@
                 "botC","botW",
                 "zooC","zooW"
             ].forEach(id => {
+                // Copy Test Name
+                document.getElementById("testName_view").innerText =
+                    document.getElementById("testName").value;
+
+                // Copy Test Type (display text, not value)
+                const typeSelect = document.getElementById("testType");
+                document.getElementById("testType_view").innerText =
+                    typeSelect.options[typeSelect.selectedIndex].text;
                 const input = document.getElementById(id);
                 const span = document.getElementById(id + "_view");
                 if (span) span.innerText = input.value;
