@@ -1,9 +1,9 @@
-/* -- TRYING OUT FOR VIEWMODE = PRINT MODE -- */
+/* -- TRYING OUT FOR VIEWMODE = PRINT MODE 1.5- */
 
 /* =========================
    GOOGLE FONTS
    ========================= */
-@import url('https://fonts.googleapis.com/css2?family=Sonsie+One&family=protest+guerrilla&family=Tac+One&family=Pacifico&family=Comic+Neue:wght@400;700&family=Bungee&family=Bitcount+Single&display=swa p&family=Henny+Penny');
+@import url('https://fonts.googleapis.com/css2?family=Sonsie+One&family=protest+guerrilla&family=Tac+One&family=Pacifico&family=Comic+Neue:wght@400;700&family=Bungee&family=Irish+Grover&family=Bitcount+Single&display=swap&family=Henny+Penny');
 
 /* =========================
    GLOBAL RESET & BASE
@@ -161,8 +161,9 @@ button {
 /* =========================
    CALCULATOR SCREEN STYLES
    ========================= */
-
 #calculate h2 {
+  font-size: 3.5rem;
+  margin-bottom: 3px;
   text-align: center;
 }
 
@@ -170,6 +171,7 @@ button {
   text-align: center;
   margin-top: -12px;
   margin-bottom: 24px;
+  font-size: 2rem;
 }
 
 #calculate .test-info label {
@@ -223,18 +225,6 @@ button {
   padding: 6px 8px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.9);
-}
-
-#calculate h2 {
-  font-size: 3.5rem;
-  margin-bottom: 3px;
-}
-
-#calculate h3 {
-  font-size: 2rem;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 18px;
 }
 
 #calculate .test-info {
@@ -495,13 +485,13 @@ button {
 /* ===== U5 History Card Content ===== */
 
 #historyList .history-title {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 6px;
 }
 
 #historyList .history-meta {
-  font-size: 1rem;
+  font-size: 1.2rem;
   opacity: 0.75;
 }
 
@@ -538,6 +528,26 @@ button {
 
 #history .action-buttons button:active {
   transform: scale(0.98);
+}
+
+/* U5 - History Card Font and Font Size Override */
+
+#history h2 {
+  font-size: 3.5rem;
+  margin: 24px 0 18px 0;
+  text-align: center;
+}
+
+#history p {
+  font-family: 'Irish Grover', cursive;
+  font-size: 2.5rem;
+  margin: 18px 0 24px 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+#historyList button {
+  font-family: 'Irish Grover', cursive;
 }
 
 
