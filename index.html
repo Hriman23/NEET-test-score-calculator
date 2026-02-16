@@ -164,7 +164,10 @@
     <!-- HISTORY SCREEN -->
     <div id="history" class="screen active">
         <div class="card">
-            <h2>Previous Test Logs</h2>
+            <h2>Your Saved Tests</h2>
+            <p>Here you can view, edit or delete your previously saved tests.</p>
+            <p>Total tests saved: <span id="historyCount"></span></p>
+            
             <div id="historyList"></div>
             
             <div class="action-buttons history-actions">
@@ -490,7 +493,14 @@
             const list = document.getElementById("historyList");
             list.innerHTML = "";
 
-            const logs = JSON.parse(localStorage.getItem("neetLogs")) || [];
+            let logs = JSON.parse(localStorage.getItem("neetLogs")) || [];
+
+            // Always sort by createdAt (newest first)
+            logs = logs.slice().sort((a, b) => 
+                new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            
+            document.getElementById("historyCount").innerText = logs.length;
 
             if (logs.length === 0) {
                 list.innerText = "No saved tests yet.";
