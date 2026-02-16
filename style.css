@@ -284,7 +284,7 @@ button {
   gap: 24px;
 }
 
-#calculate results-meta {
+#calculate .results-meta {
   margin-top: 16px;
 }
 
@@ -354,6 +354,10 @@ button {
   background: #0f2147;
 }
 
+#calculate .action-buttons button:active {
+  transform: scale(0.98);
+}
+
 /* Danger — Delete */
 #calculate .btn-danger {
   background: #b91c1c;
@@ -386,10 +390,6 @@ button {
 
 #calculate .btn-outline:hover {
   background: #e5e7eb;
-}
-
-#calculate .action-buttons button:active {
-  transform: scale(0.98);
 }
 
 /* =========================
@@ -463,4 +463,82 @@ button {
   opacity: 0.7;
   transform: translateY(6px);
 }
+
+/* =========================
+   U5 — HISTORY ENTRIES
+   ========================= */
+
+#historyList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+#historyList button {
+  background: #ffffff;
+  color: #081531;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#historyList button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* ===== U5 History Card Content ===== */
+
+#historyList .history-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+#historyList .history-meta {
+  font-size: 1rem;
+  opacity: 0.75;
+}
+
+/* History Back Button */
+
+/* Neutral — Back */
+#history .btn-neutral {
+  background: #ffffff;
+  color: #081531;
+  grid-column: 1 / -1;     /* span full row */
+  width: 100%;
+  justify-self: center;    /* center horizontally */
+}
+
+#history .btn-neutral:hover {
+  background: #d1d5db;
+}
+
+#history .action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+#history .action-buttons button {
+  padding: 16px 14px;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+#history .action-buttons button:active {
+  transform: scale(0.98);
+}
+
+
 
